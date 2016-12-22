@@ -53,6 +53,9 @@ backend {{ haproxy_backend_name }}
 {% if haproxy_backend_httpchk != '' %}
     option httpchk {{ haproxy_backend_httpchk }}
 {% endif %}
+{% if haproxy_backend_httpchk_expect != '' %}
+    http-check expect {{ haproxy_backend_httpchk_expect }}
+{% endif %}
     cookie SERVERID insert indirect
 {% for backend_var in haproxy_backend_vars %}
     {{ backend_var }}
