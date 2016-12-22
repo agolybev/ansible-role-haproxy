@@ -41,6 +41,9 @@ defaults
 frontend {{ haproxy_frontend_name }}
     bind {{ haproxy_frontend_bind_address }}:{{ haproxy_frontend_port }}
     mode {{ haproxy_frontend_mode }}
+{% for frontend_var in haproxy_frontend_vars %}
+    {{ frontend_var }}
+{% endfor %}
     default_backend {{ haproxy_backend_name }}
 
 backend {{ haproxy_backend_name }}
@@ -54,6 +57,9 @@ backend {{ haproxy_backend_name }}
     http-check expect {{ haproxy_backend_httpchk_expect }}
 {% endif %}
     cookie SERVERID insert indirect
+{% for backend_var in haproxy_backend_vars %}
+    {{ backend_var }}
+{% endfor %}
 {% for backend in haproxy_backend_servers %}
     server {{ backend.name }} {{ backend.address }} cookie {{ backend.name }} check
 {% endfor %}

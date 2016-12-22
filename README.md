@@ -31,6 +31,7 @@ The user and group under which HAProxy should run. Only change this if you know 
     haproxy_frontend_bind_address: '*'
     haproxy_frontend_port: 80
     haproxy_frontend_mode: 'http'
+    haproxy_frontend_vars: []
 
 HAProxy frontend configuration directives.
 
@@ -39,6 +40,7 @@ HAProxy frontend configuration directives.
     haproxy_backend_balance_method: 'roundrobin'
     haproxy_backend_httpchk: 'HEAD / HTTP/1.1\r\nHost:localhost'
     haproxy_backend_httpchk_expect: ''
+    haproxy_backend_vars: []
 
 HAProxy backend configuration directives.
 
