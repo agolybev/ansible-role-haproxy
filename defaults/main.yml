@@ -11,6 +11,12 @@ haproxy_frontend_port: 80
 haproxy_frontend_mode: 'http'
 haproxy_frontend_vars: []
 
+haproxy_frontend_ssl: false
+haproxy_frontend_ssl_bind_address: '*'
+haproxy_frontend_ssl_port: 443
+haproxy_frontend_ssl_certificate: {}
+haproxy_frontend_ssl_redirect: true
+
 # Backend settings.
 haproxy_backend_name: 'habackend'
 haproxy_backend_mode: 'http'
