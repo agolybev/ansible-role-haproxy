@@ -10,6 +10,9 @@ global
   user {{ haproxy_user }}
   group {{ haproxy_group }}
   daemon
+{% if haproxy_frontend_ssl %}
+  tune.ssl.default-dh-param 2048
+{% endif %}
 {% for global_var in haproxy_global_vars %}
   {{ global_var }}
 {% endfor %}
@@ -42,7 +45,7 @@ frontend {{ haproxy_frontend_name }}
     bind {{ haproxy_frontend_bind_address }}:{{ haproxy_frontend_port }}
     mode {{ haproxy_frontend_mode }}
 {% if haproxy_frontend_ssl %}
-    bind {{ haproxy_frontend_ssl_bind_address }}:{{ haproxy_frontend_ssl_port }} ssl crt {{ haproxy_frontend_ssl_certificate }}
+    bind {{ haproxy_frontend_ssl_bind_address }}:{{ haproxy_frontend_ssl_port }} ssl crt {{ haproxy_frontend_ssl_certificate }} no-sslv3 ciphers ECDHE-RSA-AES128-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA128:DHE-RSA-AES128-GCM-SHA384:DHE-RSA-AES128-GCM-SHA128:ECDHE-RSA-AES128-SHA384:ECDHE-RSA-AES128-SHA128:ECDHE-RSA-AES128-SHA:ECDHE-RSA-AES128-SHA:DHE-RSA-AES128-SHA128:DHE-RSA-AES128-SHA128:DHE-RSA-AES128-SHA:DHE-RSA-AES128-SHA:ECDHE-RSA-DES-CBC3-SHA:EDH-RSA-DES-CBC3-SHA:AES128-GCM-SHA384:AES128-GCM-SHA128:AES128-SHA128:AES128-SHA128:AES128-SHA:AES128-SHA:DES-CBC3-SHA:HIGH:!aNULL:!eNULL:!EXPORT:!DES:!MD5:!PSK:!RC4
     {% if haproxy_frontend_ssl_redirect %}
     redirect scheme https if !{ ssl_fc }
     {% endif %}
